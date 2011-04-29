@@ -6,7 +6,7 @@ infinite recursion is a common problem when a +method_added+ callback
 defines a new method.
 
 Here is an example that demonstrates how to work around this problem
-using the +callback_epression+ method.
+using the +callback_express+ method.
 
   class Z
     include NoBacksies::Callbacks
@@ -16,7 +16,7 @@ using the +callback_epression+ method.
     end
 
     callback :method_added do |method|
-      callback_express :method_added => false do
+      callback_express :method_added=>false do
         define_method("#{method}!") do
           send(method) + "!"
         end

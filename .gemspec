@@ -51,7 +51,7 @@ description: |-
   methods. It makes it possible to add new callbacks very easily, without
   having to fuss with more nuanced issues of defining and redefining callback
   methods.
-email: ""
+email: transfire@gmail.com
 executables: []
 
 extensions: []
@@ -61,8 +61,8 @@ extra_rdoc_files:
 files: 
 - lib/no_backsies.rb
 - qed/01_example.rdoc
-- qed/02_expression.rdoc
-- qed/applique/nobacksies.rb
+- qed/02_express.rdoc
+- qed/applique/no_backsies.rb
 has_rdoc: true
 homepage: http://rubyworks.github.com/nobacksies
 licenses: []

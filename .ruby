@@ -2,6 +2,7 @@
 spec_version: 1.0.0
 name: no_backsies
 title: NoBacksies
+contact: trans <transfire@gmail.com>
 requires: 
 - group: 
   - build
