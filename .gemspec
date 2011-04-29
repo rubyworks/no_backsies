@@ -1,13 +1,13 @@
 --- !ruby/object:Gem::Specification 
 name: no_backsies
 version: !ruby/object:Gem::Version 
-  hash: 27
+  hash: 23
   prerelease: false
   segments: 
   - 0
-  - 1
+  - 2
   - 0
-  version: 0.1.0
+  version: 0.2.0
 platform: ruby
 authors: 
 - Thomas Sawyer
