@@ -36,31 +36,3 @@ for every explicitly defined method.
   z.bar  #=> "bar"
   z.bar! #=> "bar!"
 
-NoBacksies makes this a little easier.
-
-  class Q
-    include NoBacksies::Callbacks
-
-    def self.list
-      @list ||= []
-    end
-
-    callback :method_added, :this=>false do |method|
-      define_method("#{method}!") do
-        send(method) + "!"
-      end
-    end
-
-    def foo; "foo"; end
-    def bar; "bar"; end
-  end
-
-In this example, a new `Z` object will get an automatically defined bang method
-for every explicitly defined method.
-
-  q = Q.new
-  q.foo  #=> "foo"
-  q.foo! #=> "foo!"
-  q.bar  #=> "bar"
-  q.bar! #=> "bar!"
-

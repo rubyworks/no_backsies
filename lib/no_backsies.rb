@@ -83,8 +83,7 @@ module NoBacksies
   module CallbackMethods
     # Define a callback.
     def callback(name, express={}, &block)
-      express[name.to_sym] = express.delete(:this) if express.key?(:this)
-      callbacks[name.to_sym] << [block, express]
+      callbacks[name.to_sym] << block
     end
 
     #
@@ -127,10 +126,8 @@ module NoBacksies
     #
     def method_added(method)
       return unless callback_express[:method_added]
-      callbacks[:method_added].each do |block, express|
-        callback_express(express) do
-          block.call(method)
-        end
+      callbacks[:method_added].each do |block|
+        block.call(method)
       end
     end
   end
