@@ -15,9 +15,28 @@ methods.
 * mail: http://groups.google.com/group/rubyworks-mailinglist
 
 
-== EXAMPLE
+== EXAMPLES
 
-Here is an example take from the Anise[http://rubyworks.github.com/anise]
+Here is a very simple example of how NoBacksies works.
+
+  class Y
+    include NoBacksies::Callbacks
+
+    def self.list
+      @list ||= []
+    end
+
+    callback :method_added do |method|
+      list << method
+    end
+
+    def foo; end
+    def bar; end
+  end
+
+  Y.list #=> [:foo, :bar]
+
+Here is another example taken from the Anise[http://rubyworks.github.com/anise]
 project.
 
   class Y
