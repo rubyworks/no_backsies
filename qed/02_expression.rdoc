@@ -1,11 +1,12 @@
 = Callback Expression
 
 NoBacksies makes it easier to control callback expression. This
-is useful in the prevention of infinite recursions. For instance, this
-is a common issue when a #method_added callback defines a new method.
+is useful in the prevention of infinite recursion. For instance,
+infinite recursion is a common problem when a +method_added+ callback
+defines a new method.
 
 Here is an example that demonstrates how to work around this problem
-using the #callback_epression method.
+using the +callback_epression+ method.
 
   class Z
     include NoBacksies::Callbacks

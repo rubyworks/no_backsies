@@ -34,9 +34,8 @@ ridoc:
 
 qedoc:
   service: custom
-  cycle: main
   document: |
-    puts `qedoc -o site/doc/qed -t "Backsies Demonstrandum" qed`
+    system 'qedoc -o site/doc/qed -t "Backsies Demonstrandum" qed/'
 
 testrb:
   service  : testrb

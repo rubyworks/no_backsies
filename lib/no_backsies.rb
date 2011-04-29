@@ -71,6 +71,12 @@ module NoBacksies
   # define and access callback definitions. Mixing-in this module is
   # handled automatically, so you do not need to worry with it. In other
   # words, consider the module *private*.
+  #
+  #--
+  # TODO: What about adding `super if defined?(super)` ot callback methods?
+  # Should this be standard? Should it occur before or after? Or should
+  # in be controlled via a special callback, e.g. `callback method_added, :super`?
+  #++
   module CallbackMethods
     #
     def callback(name, &block)
@@ -133,6 +139,7 @@ module NoBacksies
 
     #
     def method_removed(method)
+      return unless callback_expression[:method_removed]
       callbacks[:method_removed].each do |block|
         block.call(method)
       end
@@ -149,6 +156,7 @@ module NoBacksies
 
     #
     def method_undefined(method)
+      return unless callback_expression[:method_undefined]
       callbacks[:method_undefined].each do |block|
         block.call(method)
       end
@@ -165,6 +173,7 @@ module NoBacksies
 
     #
     def singleton_method_added(method)
+      return unless callback_expression[:singleton_method_added]
       callbacks[:singleton_method_added].each do |block|
         block.call(method)
       end
@@ -181,6 +190,7 @@ module NoBacksies
 
     #
     def singleton_method_removed(method)
+      return unless callback_expression[:singleton_method_removed]
       callbacks[:singleton_method_removed].each do |block|
         block.call(method)
       end
@@ -197,6 +207,7 @@ module NoBacksies
 
     #
     def singleton_method_undefined(method)
+      return unless callback_expression[:singleton_method_undefined]
       callbacks[:singleton_method_undefined].each do |block|
         block.call(method)
       end
@@ -213,6 +224,7 @@ module NoBacksies
 
     #
     def const_missing(const)
+      return unless callback_expression[:cont_missing]
       callbacks[:const_missing].each do |block|
         block.call(const)
       end
@@ -229,6 +241,7 @@ module NoBacksies
 
     #
     def included(mod)
+      return unless callback_expression[:included]
       callbacks[:included].each do |block|
         block.call(mod)
       end
@@ -245,6 +258,7 @@ module NoBacksies
 
     #
     def extended(mod)
+      return unless callback_expression[:extended]
       callbacks[:extended].each do |block|
         block.call(mod)
       end
@@ -261,6 +275,7 @@ module NoBacksies
 
     #
     def extended(mod)
+      return unless callback_expression[:inherited]
       callbacks[:inherited].each do |block|
         block.call(mod)
       end
