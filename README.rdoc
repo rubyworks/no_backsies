@@ -43,9 +43,9 @@ See the QED documentation for more examples.
 
 == INSTALLATION
 
-Install the RubyGems package in the usual fahsion.
+Install the RubyGems package in the usual fashion.
 
-  $ gem install nobacksies
+  $ gem install no_backsies
 
 
 == LEGAL
@@ -56,4 +56,4 @@ Copyright (c) 2011 Thomas Sawyer
 
 Unless otherwise negotiated with the original author, NoBacksies is
 distributable under the terms of the Apache 2.0 license. See the
-Apache2.txt file for details.
+APACHE2.txt file for details.

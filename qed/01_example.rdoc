@@ -1,6 +1,6 @@
 = Basic Example
 
-First require the 'nobacksies' library.
+First require the NoBacksies library.
 
   require 'no_backsies'
 
