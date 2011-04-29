@@ -35,7 +35,7 @@ ridoc:
 qedoc:
   service: custom
   document: |
-    system 'qedoc -o site/doc/qed -t "Backsies Demonstrandum" qed/'
+    system 'qedoc -o site/doc/qed -t "No Backsies Demonstrandum" qed/'
 
 testrb:
   service  : testrb
