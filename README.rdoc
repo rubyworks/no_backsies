@@ -37,6 +37,8 @@ project.
 
   Y.ann(:foo, :doc) #=> "here"
 
+See the QED documentation for more examples.
+
 
 == INSTALLATION
 
