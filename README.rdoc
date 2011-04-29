@@ -1,0 +1,56 @@
+= No Backsies
+
+== DESCRIPTION
+
+NoBackies is a callback layer built on top of Ruby's built-in callback
+methods. It makes it possible to add new callbacks very easily, without
+having to fuss with more nuanced issues of defining and redefining callback
+methods.
+
+
+== RESOURCES
+
+* home: http://rubyworks.github.com/nobacksies
+* code: http://github.com/rubyworks/nobacksies
+* mail: http://groups.google.com/group/rubyworks-mailinglist
+
+
+== EXAMPLE
+
+Here is an example take from the Anise[http://rubyworks.github.com/anise]
+project.
+
+  class Y
+    include Anise
+    include NoBacksies
+
+    def self.doc(string)
+      callback :method_added do |method|
+        self.ann(method, :doc=>string)
+      end
+    end
+
+    doc "here"
+
+    def foo; end
+  end
+
+  Y.ann(:foo, :doc) #=> "here"
+
+
+== INSTALLATION
+
+Install the RubyGems package in the usual fahsion.
+
+  $ gem install nobacksies
+
+
+== LEGAL
+
+(Apache 2.0 License)
+
+Copyright (c) 2011 Thomas Sawyer
+
+Unless otherwise negotiated with the original author, NoBacksies is
+distributable under the terms of the Apache 2.0 license. See the
+Apache2.txt file for details.

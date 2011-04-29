@@ -1,0 +1,5 @@
+#!mast -x Syckfile bin lib qed
+lib/nobacksies.rb
+qed/01_example.rdoc
+qed/02_expression.rdoc
+qed/applique/nobacksies.rb

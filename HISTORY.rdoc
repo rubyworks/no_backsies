@@ -1,0 +1,10 @@
+= RELEASE HISTORY
+
+== 1.0.0 | 2011-04-29 (Wedding Day)
+
+This is the initial release of NoBacksies.
+
+Changes:
+
+* Happy Wedding Day!
+

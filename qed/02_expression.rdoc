@@ -1,0 +1,37 @@
+= Callback Expression
+
+NoBacksies makes it easier to control callback expression. This
+is useful in the prevention of infinite recursions. For instance, this
+is a common issue when a #method_added callback defines a new method.
+
+Here is an example that demonstrates how to work around this problem
+using the #callback_epression method.
+
+  class Z
+    include NoBacksies::Callbacks
+
+    def self.list
+      @list ||= []
+    end
+
+    callback :method_added do |method|
+      callback_expression :method_added => false do
+        define_method("#{method}!") do
+          send(method) + "!"
+        end
+      end
+    end
+
+    def foo; "foo"; end
+    def bar; "bar"; end
+  end
+
+In this example, a new `Z` object will get an automatically defined bang method
+for every explicitly defined method.
+
+  z = Z.new
+  z.foo  #=> "foo"
+  z.foo! #=> "foo!"
+  z.bar  #=> "bar"
+  z.bar! #=> "bar!"
+

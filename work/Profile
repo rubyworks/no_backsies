@@ -1,0 +1,27 @@
+#!/usr/bin/env ruby
+
+name      'nobacksies'
+title     'NoBacksies'
+summary   'Improve Control Over Ruby Callbacks'
+license   'Apache 2.0'
+contact   'trans <transfire@gmail.com>'
+created   '2011-04-29'
+
+authors ['Thomas Sawyer']
+
+description %{
+  NoBacksies is a small library that makes it much easier
+  to work with Ruby's built-int callbacks.
+}.strip
+
+company   'Rubyworks'
+copyright 'Copyright (c) 2008 Thomas Sawyer'
+
+version File.read('VERSION').strip
+date    Time.now
+
+manifest 'MANIFEST'
+
+gem 'syckle (build)'
+gem 'qed    (test)'
+
