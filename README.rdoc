@@ -13,6 +13,8 @@ methods.
 * home: http://rubyworks.github.com/nobacksies
 * code: http://github.com/rubyworks/nobacksies
 * mail: http://groups.google.com/group/rubyworks-mailinglist
+* api:  http://rubyworks.github.com/nobacksies/doc/api
+* qed:  http://rubyworks.github.com/nobacksies/doc/qed
 
 
 == EXAMPLES
