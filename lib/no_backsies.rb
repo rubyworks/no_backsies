@@ -1,6 +1,6 @@
 # NoBacksies module ecapsulates all supported callback mixins.
 #
-# NoBackseis can be mixed-in and all NoBackies supported callbacks will
+# NoBackseis::Callbacks can be mixed-in and all supported callbacks will
 # be applied to the class or module. 
 # 
 #   class Y
@@ -32,7 +32,7 @@
 #     end
 #
 #     callback :method_added do |method|
-#       callback_expression :method_added => false do
+#       callback_expression :method_added=>false do
 #         define_method("#{method}!") do
 #           send(method) + "!"
 #         end
@@ -47,7 +47,7 @@
 #   y.foo! #=> "foo!"
 #
 # NOTE: Currently the NoBackies module only supports class level callbacks.
-# We will look at adding instance level callbacks in a future version.
+# We will look into adding instance level callbacks in a future version.
 
 module NoBacksies
 
