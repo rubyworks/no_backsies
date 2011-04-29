@@ -16,7 +16,7 @@ using the +callback_epression+ method.
     end
 
     callback :method_added do |method|
-      callback_expression :method_added => false do
+      callback_express :method_added => false do
         define_method("#{method}!") do
           send(method) + "!"
         end
@@ -35,4 +35,32 @@ for every explicitly defined method.
   z.foo! #=> "foo!"
   z.bar  #=> "bar"
   z.bar! #=> "bar!"
+
+NoBacksies makes this a little easier.
+
+  class Q
+    include NoBacksies::Callbacks
+
+    def self.list
+      @list ||= []
+    end
+
+    callback :method_added, :this=>false do |method|
+      define_method("#{method}!") do
+        send(method) + "!"
+      end
+    end
+
+    def foo; "foo"; end
+    def bar; "bar"; end
+  end
+
+In this example, a new `Z` object will get an automatically defined bang method
+for every explicitly defined method.
+
+  q = Q.new
+  q.foo  #=> "foo"
+  q.foo! #=> "foo!"
+  q.bar  #=> "bar"
+  q.bar! #=> "bar!"
 

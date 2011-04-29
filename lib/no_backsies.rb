@@ -21,7 +21,7 @@
 #   Y.list.assert #=> [:foo, :bar]
 #
 # Using callbacks can easily lead to infinite loops. NoBacksies makes it
-# easier to control callback expression via the #callback_expression
+# easier to control callback expression via the #callback_express
 # method.
 #
 #   class Z
@@ -32,7 +32,7 @@
 #     end
 #
 #     callback :method_added do |method|
-#       callback_expression :method_added=>false do
+#       callback_express :method_added=>false do
 #         define_method("#{method}!") do
 #           send(method) + "!"
 #         end
@@ -48,8 +48,16 @@
 #
 # NOTE: Currently the NoBackies module only supports class level callbacks.
 # We will look into adding instance level callbacks in a future version.
+#
+#--
+# TODO: What about adding `super if defined?(super)` to callback methods?
+# Should this be standard? Should it occur before or after? Or should
+# in be controlled via a special callback, e.g. `callback method_added, :super`?
+#++
 
 module NoBacksies
+
+  #
 
   module Callbacks
     # Apply all supported callback modules.
@@ -71,16 +79,12 @@ module NoBacksies
   # define and access callback definitions. Mixing-in this module is
   # handled automatically, so you do not need to worry with it. In other
   # words, consider the module *private*.
-  #
-  #--
-  # TODO: What about adding `super if defined?(super)` ot callback methods?
-  # Should this be standard? Should it occur before or after? Or should
-  # in be controlled via a special callback, e.g. `callback method_added, :super`?
-  #++
+
   module CallbackMethods
-    #
-    def callback(name, &block)
-      callbacks[name.to_sym] << block
+    # Define a callback.
+    def callback(name, express={}, &block)
+      express[name.to_sym] = express.delete(:this) if express.key?(:this)
+      callbacks[name.to_sym] << [block, express]
     end
 
     #
@@ -96,19 +100,19 @@ module NoBacksies
     # Returns Hash of true/false activity state of callbacks.
     #
     # TODO: Should expression be inherited?
-    def callback_expression(express={}, &block)
-      @_callback_expression ||= Hash.new{|h,k| h[k]=true}
+    def callback_express(express={}, &block)
+      @_callback_express ||= Hash.new{|h,k| h[k]=true}
 
       if block
-        tmp = @_callback_expression.dup
-        express.each{ |k,v| @_callback_expression[k.to_sym] = !!v }
+        tmp = @_callback_express.dup
+        express.each{ |k,v| @_callback_express[k.to_sym] = !!v }
         block.call
-        @_callback_expression = tmp
+        @_callback_express = tmp
       else
-        express.each{ |k,v| @_callback_expression[k.to_sym] = !!v }
+        express.each{ |k,v| @_callback_express[k.to_sym] = !!v }
       end
 
-      @_callback_expression
+      @_callback_express
     end
   end
 
@@ -122,9 +126,11 @@ module NoBacksies
 
     #
     def method_added(method)
-      return unless callback_expression[:method_added]
-      callbacks[:method_added].each do |block|
-        block.call(method)
+      return unless callback_express[:method_added]
+      callbacks[:method_added].each do |block, express|
+        callback_express(express) do
+          block.call(method)
+        end
       end
     end
   end
@@ -139,7 +145,7 @@ module NoBacksies
 
     #
     def method_removed(method)
-      return unless callback_expression[:method_removed]
+      return unless callback_express[:method_removed]
       callbacks[:method_removed].each do |block|
         block.call(method)
       end
@@ -156,7 +162,7 @@ module NoBacksies
 
     #
     def method_undefined(method)
-      return unless callback_expression[:method_undefined]
+      return unless callback_express[:method_undefined]
       callbacks[:method_undefined].each do |block|
         block.call(method)
       end
@@ -173,7 +179,7 @@ module NoBacksies
 
     #
     def singleton_method_added(method)
-      return unless callback_expression[:singleton_method_added]
+      return unless callback_express[:singleton_method_added]
       callbacks[:singleton_method_added].each do |block|
         block.call(method)
       end
@@ -190,7 +196,7 @@ module NoBacksies
 
     #
     def singleton_method_removed(method)
-      return unless callback_expression[:singleton_method_removed]
+      return unless callback_express[:singleton_method_removed]
       callbacks[:singleton_method_removed].each do |block|
         block.call(method)
       end
@@ -207,7 +213,7 @@ module NoBacksies
 
     #
     def singleton_method_undefined(method)
-      return unless callback_expression[:singleton_method_undefined]
+      return unless callback_express[:singleton_method_undefined]
       callbacks[:singleton_method_undefined].each do |block|
         block.call(method)
       end
@@ -224,7 +230,7 @@ module NoBacksies
 
     #
     def const_missing(const)
-      return unless callback_expression[:cont_missing]
+      return unless callback_express[:cont_missing]
       callbacks[:const_missing].each do |block|
         block.call(const)
       end
@@ -241,7 +247,7 @@ module NoBacksies
 
     #
     def included(mod)
-      return unless callback_expression[:included]
+      return unless callback_express[:included]
       callbacks[:included].each do |block|
         block.call(mod)
       end
@@ -258,7 +264,7 @@ module NoBacksies
 
     #
     def extended(mod)
-      return unless callback_expression[:extended]
+      return unless callback_express[:extended]
       callbacks[:extended].each do |block|
         block.call(mod)
       end
@@ -275,7 +281,7 @@ module NoBacksies
 
     #
     def extended(mod)
-      return unless callback_expression[:inherited]
+      return unless callback_express[:inherited]
       callbacks[:inherited].each do |block|
         block.call(mod)
       end
