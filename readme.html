@@ -1,0 +1,87 @@
+
+<h1>No Backsies</h1>
+
+<h2>DESCRIPTION</h2>
+
+<p>NoBackies is a callback layer built on top of Ruby’s built-in callback
+methods. It makes it possible to add new callbacks very easily, without
+having to fuss with more nuanced issues of defining and redefining callback
+methods.</p>
+
+<h2>RESOURCES</h2>
+<ul><li>
+<p>home: <a
+href="http://rubyworks.github.com/nobacksies">rubyworks.github.com/nobacksies</a></p>
+</li><li>
+<p>code: <a
+href="http://github.com/rubyworks/nobacksies">github.com/rubyworks/nobacksies</a></p>
+</li><li>
+<p>mail: <a
+href="http://groups.google.com/group/rubyworks-mailinglist">groups.google.com/group/rubyworks-mailinglist</a></p>
+</li><li>
+<p>api:  <a
+href="http://rubyworks.github.com/nobacksies/doc/api">rubyworks.github.com/nobacksies/doc/api</a></p>
+</li><li>
+<p>qed:  <a
+href="http://rubyworks.github.com/nobacksies/doc/qed">rubyworks.github.com/nobacksies/doc/qed</a></p>
+</li></ul>
+
+<h2>EXAMPLES</h2>
+
+<p>Here is a very simple example of how NoBacksies works.</p>
+
+<pre>class Y
+  include NoBacksies::Callbacks
+
+  def self.list
+    @list ||= []
+  end
+
+  callback :method_added do |method|
+    list &lt;&lt; method
+  end
+
+  def foo; end
+  def bar; end
+end
+
+Y.list #=&gt; [:foo, :bar]</pre>
+
+<p>Here is another example taken from the <a
+href="http://rubyworks.github.com/anise">Anise</a> project.</p>
+
+<pre>class Y
+  include Anise
+  include NoBacksies
+
+  def self.doc(string)
+    callback :method_added, :once=&gt;true do |method|
+      self.ann(method, :doc=&gt;string)
+    end
+  end
+
+  doc &quot;foo is cool&quot;
+  def foo
+    # ...
+  end
+end
+
+Y.ann(:foo, :doc) #=&gt; &quot;foo is cool&quot;</pre>
+
+<p>See the QED documentation for more examples.</p>
+
+<h2>INSTALLATION</h2>
+
+<p>Install the RubyGems package in the usual fashion.</p>
+
+<pre>$ gem install no_backsies</pre>
+
+<h2>LEGAL</h2>
+
+<p>(Apache 2.0 License)</p>
+
+<p>Copyright © 2011 Thomas Sawyer</p>
+
+<p>Unless otherwise negotiated with the original author, NoBacksies is
+distributable under the terms of the Apache 2.0 license. See the
+APACHE2.txt file for details.</p>
