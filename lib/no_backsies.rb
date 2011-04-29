@@ -82,8 +82,8 @@ module NoBacksies
 
   module CallbackMethods
     # Define a callback.
-    def callback(name, express={}, &block)
-      callbacks[name.to_sym] << block
+    def callback(name, options={}, &block)
+      callbacks[name.to_sym] << [block, options]
     end
 
     #
@@ -113,6 +113,24 @@ module NoBacksies
 
       @_callback_express
     end
+
+    # Invoke a callback.
+    def callback_invoke(name, *args)
+      name = name.to_sym
+      return unless callback_express[name]
+      callbacks[name].each do |block, options|
+        if options[:safe]
+          callback_express(name=>false) do
+            block.call(*args)            
+          end
+        else
+          block.call(*args)
+        end
+        if options[:once]
+          callbacks[name].delete([block, options])
+        end
+      end
+    end
   end
 
   # Callback system for #method_added.
@@ -125,10 +143,7 @@ module NoBacksies
 
     #
     def method_added(method)
-      return unless callback_express[:method_added]
-      callbacks[:method_added].each do |block|
-        block.call(method)
-      end
+      callback_invoke(:method_added, method)
     end
   end
 
@@ -142,10 +157,7 @@ module NoBacksies
 
     #
     def method_removed(method)
-      return unless callback_express[:method_removed]
-      callbacks[:method_removed].each do |block|
-        block.call(method)
-      end
+      callback_invoke(:method_removed, method)
     end
   end
 
@@ -159,10 +171,7 @@ module NoBacksies
 
     #
     def method_undefined(method)
-      return unless callback_express[:method_undefined]
-      callbacks[:method_undefined].each do |block|
-        block.call(method)
-      end
+      callback_invoke(:method_undefined, method)
     end
   end
 
@@ -176,10 +185,7 @@ module NoBacksies
 
     #
     def singleton_method_added(method)
-      return unless callback_express[:singleton_method_added]
-      callbacks[:singleton_method_added].each do |block|
-        block.call(method)
-      end
+      callback_invoke(:singleton_method_added, method)
     end
   end
 
@@ -193,10 +199,7 @@ module NoBacksies
 
     #
     def singleton_method_removed(method)
-      return unless callback_express[:singleton_method_removed]
-      callbacks[:singleton_method_removed].each do |block|
-        block.call(method)
-      end
+      callback_invoke(:singleton_method_removed, method)
     end
   end
 
@@ -210,10 +213,7 @@ module NoBacksies
 
     #
     def singleton_method_undefined(method)
-      return unless callback_express[:singleton_method_undefined]
-      callbacks[:singleton_method_undefined].each do |block|
-        block.call(method)
-      end
+      callback_invoke(:singleton_method_undefined, method)
     end
   end
 
@@ -227,10 +227,7 @@ module NoBacksies
 
     #
     def const_missing(const)
-      return unless callback_express[:cont_missing]
-      callbacks[:const_missing].each do |block|
-        block.call(const)
-      end
+      callback_invoke(:const_missing, method)
     end
   end
 
@@ -244,10 +241,7 @@ module NoBacksies
 
     #
     def included(mod)
-      return unless callback_express[:included]
-      callbacks[:included].each do |block|
-        block.call(mod)
-      end
+      callback_invoke(:included, method)
     end
   end
 
@@ -261,10 +255,7 @@ module NoBacksies
 
     #
     def extended(mod)
-      return unless callback_express[:extended]
-      callbacks[:extended].each do |block|
-        block.call(mod)
-      end
+      callback_invoke(:extended, method)
     end
   end
 
@@ -278,10 +269,7 @@ module NoBacksies
 
     #
     def extended(mod)
-      return unless callback_express[:inherited]
-      callbacks[:inherited].each do |block|
-        block.call(mod)
-      end
+      callback_invoke(:inherited, method)
     end
   end
 

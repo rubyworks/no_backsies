@@ -25,17 +25,18 @@ project.
     include NoBacksies
 
     def self.doc(string)
-      callback :method_added do |method|
+      callback :method_added, :once=>true do |method|
         self.ann(method, :doc=>string)
       end
     end
 
-    doc "here"
-
-    def foo; end
+    doc "foo is cool"
+    def foo
+      # ...
+    end
   end
 
-  Y.ann(:foo, :doc) #=> "here"
+  Y.ann(:foo, :doc) #=> "foo is cool"
 
 See the QED documentation for more examples.
 

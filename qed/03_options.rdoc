@@ -1,0 +1,56 @@
+= Callback Options
+
+== Once Callback Option
+
+Backsies supports special callback options. The first is +:once+.
+By setting +:once+ to +true+, the callback will be used one time and
+then removed.
+
+  class Q
+    include NoBacksies::Callbacks
+
+    def self.list
+      @list ||= []
+    end
+
+    callback :method_added, :once=>true do |method|
+      list << method
+    end
+
+    def foo; "foo"; end
+    def bar; "bar"; end
+  end
+
+Here we see that only :foo has been added to the list.
+
+  Q.list #=> [:foo]
+
+== Safe Callback Option
+
+The other option supported is +:safe+. When +:safe+ is set to true
+the callback is automatically wrapped in an #callback_express block
+that sets the expression of the callback to false whiile it is being
+processed. This means we can rewrite our first example more succicntly.
+
+  class Z2
+    include NoBacksies::Callbacks
+
+    callback :method_added, :safe=>true do |method|
+      define_method("#{method}!") do
+        send(method) + "!"
+      end
+    end
+
+    def foo; "foo"; end
+    def bar; "bar"; end
+  end
+
+In this example, a new `Z` object will get an automatically defined bang method
+for every explicitly defined method.
+
+  z = Z.new
+  z.foo  #=> "foo"
+  z.foo! #=> "foo!"
+  z.bar  #=> "bar"
+  z.bar! #=> "bar!"
+

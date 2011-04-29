@@ -62,6 +62,7 @@ files:
 - lib/no_backsies.rb
 - qed/01_example.rdoc
 - qed/02_express.rdoc
+- qed/03_options.rdoc
 - qed/applique/no_backsies.rb
 has_rdoc: true
 homepage: http://rubyworks.github.com/nobacksies

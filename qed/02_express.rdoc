@@ -11,10 +11,6 @@ using the +callback_express+ method.
   class Z
     include NoBacksies::Callbacks
 
-    def self.list
-      @list ||= []
-    end
-
     callback :method_added do |method|
       callback_express :method_added=>false do
         define_method("#{method}!") do
