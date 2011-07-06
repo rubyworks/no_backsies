@@ -1,25 +1,23 @@
 <html>
 <head>
-  <link rel="icon" type="image/jpg" href="icon.jpg">
-  <title>Backsies</title>
-  <script src="jquery.js"></script>
-  <script>
-    $(document).ready(function(){
-      $("#readme").load("readme.html", function(){
-        $("#readme h1:first").hide();
-      });
-    });
-  </script>
+  <link rel="icon" type="image/jpg" href="assets/images/icon.jpg">
+  <title>No Backsies</title>
   <style>
     body { padding: 0; margin: 0; }
-    li p { margin: 5px 0; }
-    .center { margin: 0 auto; width: 640px; }
-    #readme { margin: 0 auto; width: 640px; }
+     a { text-decoration: none; }
+     a:hover { text-decoration: underline; }
+    ul { magrin 0; padding: 0 0 0 0; list-style-type: none; }
+    li { margin: 15px 0; }
+    li a { font-size: 1.5em; color: #fff; text-shadow: 1px 1px #555; background: red; padding: 5px;
+      border-radius: 10px;
+    }
+    .center { margin: 0 auto; width: 730px; }
+    #readme { margin: 0 auto; width: 730px; padding-top: 20px; }
     #readme p { text-align: justify; }
-    #footer { margin: 60px 0 0 0; border-top: 1px solid #ccc; padding: 50px 0; }
-    #header { padding: 30px 0; background: url(red-phone.jpg) center right no-repeat; border-bottom: 1px solid #ccc; }
-    #header h1 { font-size: 80px; color: #111; text-shadow: 1px 1px #777; margin: 0 0 0 -120px; padding: 0; opacity: 0.7; }
-    #header h2 { font-size: 20px; color: #111; text-shadow: 1px 1px #777; margin: 0 0 0 -115px; padding: 0; opacity: 0.7; }
+    #footer { margin: 80px 0 0 0; border-top: 0px solid #ccc; padding: 50px 0; }
+    #header { padding: 30px 0; border-bottom: 0px solid #ccc; }
+    #header h1 { font-size: 80px; color: #111; text-shadow: 1px 1px #777; margin: 0 0 0 -5px; padding: 0; opacity: 0.7; }
+    #header h2 { font-size: 20px; color: #111; text-shadow: 1px 1px #777; margin: 0 0 0 0; padding: 0; opacity: 0.7; }
     h2 { margin: 60px 0 10px 0; }
     pre { font-family: courier, monospace; font-size: 0.9em; color: #555; padding: 10px; }
   </style>
@@ -34,7 +32,15 @@
 </div>
 
 <div id="readme">
-  Please, ensure Javascript in enabled.
+  <img src="assets/images/red-phone.jpg" align="left" width="420px" style="margin-left: -30px; padding-right: 20px;" />
+  <br/><br/>
+  <ol>
+  <li><a href="http://rubyworks.github.com/no_backsies/qed.html">SEEING IS BELIEVING</a></li>
+  <li><a href="http://rubydoc.info/gems/no_backsies/frames">API API API</a></li>
+  <li><a href="http://github.com/rubyworks/no_backsies">USE THE SOURCE, LUKE!</a></li>
+  <li><a href="http://groups.google.com/group/rubyworks-mailinglist">CAN WE TALK?</a></li>
+  <li><a href="http://rubyworks.github.com/no_backsies">YOU ARE HERE!</a></li>
+  </ol>
 </div>
 
 <div id="footer">
