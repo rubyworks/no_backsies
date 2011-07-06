@@ -69,6 +69,26 @@ Install the RubyGems package in the usual fashion.
   $ gem install no_backsies
 
 
+== CONTRIBUTE
+
+=== Testing
+
+QED[http://rubyworks.github.com/qed] is used to testing.
+
+  $ gem install qed
+
+To run the tests:
+
+  $ qed [path/to/test]
+
+=== Development
+
+Source code is hosted on GitHub[http://github.com/rubyworks/qed].
+
+If you'd like to submit a patch please for the repository and
+submit a pull request (ideally in a topic branch).
+
+
 == LEGAL
 
 (BSD 2 License)
