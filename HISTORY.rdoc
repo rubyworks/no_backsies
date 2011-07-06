@@ -1,6 +1,16 @@
 = RELEASE HISTORY
 
-== 1.0.0 | 2011-04-29 (Wedding Day)
+== 0.3.0 | 2011-07-06
+
+Switch to BSD 2-Clause license.
+
+
+== 0.2.0 | 2011-04-29 (Later on Wedding Day)
+
+You know, one of thsoe "oops", kind of things.
+
+
+== 0.1.0 | 2011-04-29 (Wedding Day)
 
 This is the initial release of NoBacksies.
 
