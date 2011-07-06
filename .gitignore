@@ -1,8 +1,6 @@
 .yardoc
-.ri
 doc
 log
 pkg
 tmp
-site/doc
-site/readme.html
+site/qed.html
