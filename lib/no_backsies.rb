@@ -58,7 +58,6 @@
 module NoBacksies
 
   #
-
   module Callbacks
     # Apply all supported callback modules.
     def self.append_features(base)
@@ -72,6 +71,7 @@ module NoBacksies
       base.extend ConstMissing
       base.extend Included
       base.extend Extended
+      base.extend Inherited
     end
   end
 
@@ -268,8 +268,8 @@ module NoBacksies
     end
 
     #
-    def extended(mod)
-      callback_invoke(:inherited, mod)
+    def inherited(base)
+      callback_invoke(:inherited, base)
     end
   end
 
