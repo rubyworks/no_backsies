@@ -1,0 +1,7 @@
+--output-dir doc
+--title NoBacksies
+--protected
+--private
+lib/
+-
+[A-Z]*.*

@@ -1,10 +1,23 @@
-#!mast bin lib qed [A-Z]*.*
+#!mast .yardopts .ruby bin lib qed [A-Z]*.*
+.yardopts
+.ruby
 lib/no_backsies.rb
 qed/01_example.rdoc
 qed/02_express.rdoc
 qed/03_options.rdoc
 qed/applique/no_backsies.rb
+qed/callbacks/01_method_added.rdoc
+qed/callbacks/02_method_removed.rdoc
+qed/callbacks/03_method_undefined.rdoc
+qed/callbacks/04_singleton_method_added.rdoc
+qed/callbacks/05_singleton_method_removed.rdoc
+qed/callbacks/06_singleton_method_undefined.rdoc
+qed/callbacks/07_const_missing.rdoc
+qed/callbacks/08_included.rdoc
+qed/callbacks/09_extended.rdoc
+qed/callbacks/10_inherited.rdoc
 HISTORY.rdoc
 README.rdoc
+QED.rdoc
 COPYING.rdoc
 NOTICE.rdoc

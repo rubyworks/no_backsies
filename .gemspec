@@ -2,7 +2,7 @@
 name: no_backsies
 version: !ruby/object:Gem::Version 
   prerelease: 
-  version: 0.3.0
+  version: 0.3.1
 platform: ruby
 authors: 
 - Thomas Sawyer
@@ -35,7 +35,7 @@ dependencies:
   type: :development
   version_requirements: *id002
 description: |-
-  NoBackies is a callback layer built on top of Ruby's built-in callback
+  NoBacksies is a callback layer built on top of Ruby's built-in callback
   methods. It makes it possible to add new callbacks very easily, without
   having to fuss with more nuanced issues of defining and redefining callback
   methods.
@@ -47,16 +47,29 @@ extensions: []
 extra_rdoc_files: 
 - README.rdoc
 files: 
+- .yardopts
+- .ruby
 - lib/no_backsies.rb
 - qed/01_example.rdoc
 - qed/02_express.rdoc
 - qed/03_options.rdoc
 - qed/applique/no_backsies.rb
+- qed/callbacks/01_method_added.rdoc
+- qed/callbacks/02_method_removed.rdoc
+- qed/callbacks/03_method_undefined.rdoc
+- qed/callbacks/04_singleton_method_added.rdoc
+- qed/callbacks/05_singleton_method_removed.rdoc
+- qed/callbacks/06_singleton_method_undefined.rdoc
+- qed/callbacks/07_const_missing.rdoc
+- qed/callbacks/08_included.rdoc
+- qed/callbacks/09_extended.rdoc
+- qed/callbacks/10_inherited.rdoc
 - HISTORY.rdoc
 - README.rdoc
+- QED.rdoc
 - COPYING.rdoc
 - NOTICE.rdoc
-homepage: http://rubyworks.github.com/anise]
+homepage: http://rubyworks.github.com/no_backsies
 licenses: []
 
 post_install_message: 

@@ -1,5 +1,17 @@
 = RELEASE HISTORY
 
+
+== 0.3.1 | 2011-07-6
+
+Fix method argumements on const_missing, included, extended
+and inherited callbacks.
+
+Changes:
+
+* Fixed callback arguments that have been copy/pasted. (blambeau)
+* Add individual tests for each callback.
+
+
 == 0.3.0 | 2011-07-06
 
 This release is made primarily because the program is now
