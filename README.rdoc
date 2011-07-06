@@ -71,10 +71,10 @@ Install the RubyGems package in the usual fashion.
 
 == LEGAL
 
-(Apache 2.0 License)
+(BSD 2 License)
 
 Copyright (c) 2011 Thomas Sawyer
 
 Unless otherwise negotiated with the original author, NoBacksies is
-distributable under the terms of the Apache 2.0 license. See the
-APACHE2.txt file for details.
+distributable under the terms of the BSD 2-clause license. See the
+LICENSE.rdoc file for details.
