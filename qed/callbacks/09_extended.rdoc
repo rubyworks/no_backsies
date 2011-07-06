@@ -1,0 +1,28 @@
+= Extended
+
+Given a class that defines a no-backsies +extended+ callback.
+
+  module U
+    include NoBacksies::Callbacks
+
+    def self.list
+      @list ||= []
+    end
+
+    callback :extended do |mod|
+      list << mod
+    end
+  end
+
+  class X
+    extend U
+  end
+
+  class Y
+    extend U
+  end
+
+Then the results are as follows.
+
+  U.list #=> [X, Y]
+

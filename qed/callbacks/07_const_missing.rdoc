@@ -1,0 +1,24 @@
+= Constant Missing
+
+Given a class that defines a no-backsies +const_missing+ callback.
+
+  class Y
+    include NoBacksies::Callbacks
+
+    def self.list
+      @list ||= []
+    end
+
+    callback :const_missing do |const|
+      list << const
+    end
+
+    FOO
+    BAR
+
+  end
+
+Then the results are as follows.
+
+  Y.list #=> [:FOO, :BAR]
+

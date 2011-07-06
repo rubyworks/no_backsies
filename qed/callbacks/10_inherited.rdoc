@@ -1,0 +1,22 @@
+= Inherited
+
+Given a class that defines a no-backsies +inherited+ callback.
+
+  class Y
+    include NoBacksies::Callbacks
+
+    def self.list
+      @list ||= []
+    end
+
+    callback :inherited do |base|
+      list << base
+    end
+  end
+
+  z = Class.new(Y)
+
+Then the results are as follows.
+
+  Y.list #=> [z]
+

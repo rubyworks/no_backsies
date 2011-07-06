@@ -1,0 +1,26 @@
+== Method Undefined
+
+Given a class that defines a no-backsies +method_undefined+ callback.
+
+  class Y
+    include NoBacksies::Callbacks
+
+    def self.list
+      @list ||= []
+    end
+
+    callback :method_undefined do |method|
+      list << method
+    end
+
+    def foo; end
+    def bar; end
+
+    undef_method(:foo)
+    undef_method(:bar)
+  end
+
+Then the results are as follows.
+
+  Y.list #=> [:foo, :bar]
+

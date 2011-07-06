@@ -1,0 +1,28 @@
+= Included
+
+Given a class that defines a no-backsies +included+ callback.
+
+  module U
+    include NoBacksies::Callbacks
+
+    def self.list
+      @list ||= []
+    end
+
+    callback :included do |mod|
+      list << mod
+    end
+  end
+
+  class X
+    include U
+  end
+
+  class Y
+    include U
+  end
+
+Then the results are as follows.
+
+  U.list #=> [X, Y]
+
