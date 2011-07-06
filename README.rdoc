@@ -71,6 +71,12 @@ Install the RubyGems package in the usual fashion.
 
 == CONTRIBUTE
 
+=== Development
+
+Source code is hosted on GitHub[http://github.com/rubyworks/qed].
+If you'd like to submit a patch please fork the repository and
+submit a pull request (ideally in a topic branch).
+
 === Testing
 
 QED[http://rubyworks.github.com/qed] is used to testing.
@@ -81,12 +87,15 @@ To run the tests:
 
   $ qed [path/to/test]
 
-=== Development
+=== Donations
 
-Source code is hosted on GitHub[http://github.com/rubyworks/qed].
+Software development is very time consuming. Rubyworks does a lot of FOSS 
+development for el <i>$0</i>. We do it for the love of programming and
+for Ruby. Just the same any dollars that do come are way helps us continue
+the effort. So anything you may offer will help these projects continue to
+florish. See the {Rubyworks Homepage}[http://rubyworks.github.com]. 
 
-If you'd like to submit a patch please for the repository and
-submit a pull request (ideally in a topic branch).
+Thanks.
 
 
 == LEGAL
