@@ -227,7 +227,7 @@ module NoBacksies
 
     #
     def const_missing(const)
-      callback_invoke(:const_missing, method)
+      callback_invoke(:const_missing, const)
     end
   end
 
@@ -241,7 +241,7 @@ module NoBacksies
 
     #
     def included(mod)
-      callback_invoke(:included, method)
+      callback_invoke(:included, mod)
     end
   end
 
@@ -255,7 +255,7 @@ module NoBacksies
 
     #
     def extended(mod)
-      callback_invoke(:extended, method)
+      callback_invoke(:extended, mod)
     end
   end
 
@@ -269,7 +269,7 @@ module NoBacksies
 
     #
     def extended(mod)
-      callback_invoke(:inherited, method)
+      callback_invoke(:inherited, mod)
     end
   end
 
