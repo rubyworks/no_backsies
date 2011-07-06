@@ -271,6 +271,298 @@ method for every explicitly defined method.
   z.bar! #=&gt; &quot;bar!&quot;
 </pre>
 
+<h2>Method Added</h2>
+<p>
+Given a class that defines a no-backsies <tt>method_added</tt> callback.
+</p>
+<pre>
+  class Y
+    include NoBacksies::Callbacks
+
+    def self.list
+      @list ||= []
+    end
+
+    callback :method_added do |method|
+      list &lt;&lt; method
+    end
+
+    def foo; end
+    def bar; end
+  end
+</pre>
+<p>
+Then the results are as follows.
+</p>
+<pre>
+  Y.list #=&gt; [:foo, :bar]
+</pre>
+
+<h2>Method Removed</h2>
+<p>
+Given a class that defines a no-backsies <tt>method_removed</tt> callback.
+</p>
+<pre>
+  class Y
+    include NoBacksies::Callbacks
+
+    def self.list
+      @list ||= []
+    end
+
+    callback :method_removed do |method|
+      list &lt;&lt; method
+    end
+
+    def foo; end
+    def bar; end
+
+    remove_method(:foo)
+    remove_method(:bar)
+  end
+</pre>
+<p>
+Then the results are as follows.
+</p>
+<pre>
+  Y.list #=&gt; [:foo, :bar]
+</pre>
+
+<h2>Method Undefined</h2>
+<p>
+Given a class that defines a no-backsies <tt>method_undefined</tt>
+callback.
+</p>
+<pre>
+  class Y
+    include NoBacksies::Callbacks
+
+    def self.list
+      @list ||= []
+    end
+
+    callback :method_undefined do |method|
+      list &lt;&lt; method
+    end
+
+    def foo; end
+    def bar; end
+
+    undef_method(:foo)
+    undef_method(:bar)
+  end
+</pre>
+<p>
+Then the results are as follows.
+</p>
+<pre>
+  Y.list #=&gt; [:foo, :bar]
+</pre>
+
+<h2>Singleton Method Added</h2>
+<p>
+Given a class that defines a no-backsies <tt>singleton_method_added</tt>
+callback.
+</p>
+<pre>
+  class Y
+    include NoBacksies::Callbacks
+
+    def self.list
+      @list ||= []
+    end
+
+    callback :singleton_method_added do |method|
+      list &lt;&lt; method
+    end
+
+    def self.foo; end
+    def self.bar; end
+  end
+</pre>
+<p>
+Then the results are as follows.
+</p>
+<pre>
+  Y.list #=&gt; [:foo, :bar]
+</pre>
+
+<h2>Singleton Method Removed</h2>
+<p>
+Given a class that defines a no-backsies <tt>singleton_method_removed</tt>
+callback.
+</p>
+<pre>
+  class Y
+    include NoBacksies::Callbacks
+
+    def self.list
+      @list ||= []
+    end
+
+    callback :singleton_method_removed do |method|
+      list &lt;&lt; method
+    end
+
+    def self.foo; end
+    def self.bar; end
+
+    class &lt;&lt; self
+      remove_method(:foo)
+      remove_method(:bar)
+    end
+  end
+</pre>
+<p>
+Then the results are as follows.
+</p>
+<pre>
+  Y.list #=&gt; [:foo, :bar]
+</pre>
+
+<h2>Singleton Method Undefined</h2>
+<pre>
+  class Y
+    include NoBacksies::Callbacks
+
+    def self.list
+      @list ||= []
+    end
+
+    callback :singleton_method_undefined do |method|
+      list &lt;&lt; method
+    end
+
+    def self.foo; end
+    def self.bar; end
+
+    class &lt;&lt; self
+      undef_method(:foo)
+      undef_method(:bar)
+    end
+  end
+
+  Y.list #=&gt; [:foo, :bar]
+</pre>
+
+<h1>Constant Missing</h1>
+<p>
+Given a class that defines a no-backsies <tt>const_missing</tt> callback.
+</p>
+<pre>
+  class Y
+    include NoBacksies::Callbacks
+
+    def self.list
+      @list ||= []
+    end
+
+    callback :const_missing do |const|
+      list &lt;&lt; const
+    end
+
+    FOO
+    BAR
+
+  end
+</pre>
+<p>
+Then the results are as follows.
+</p>
+<pre>
+  Y.list #=&gt; [:FOO, :BAR]
+</pre>
+
+<h1>Included</h1>
+<p>
+Given a class that defines a no-backsies <tt>included</tt> callback.
+</p>
+<pre>
+  module U
+    include NoBacksies::Callbacks
+
+    def self.list
+      @list ||= []
+    end
+
+    callback :included do |mod|
+      list &lt;&lt; mod
+    end
+  end
+
+  class X
+    include U
+  end
+
+  class Y
+    include U
+  end
+</pre>
+<p>
+Then the results are as follows.
+</p>
+<pre>
+  U.list #=&gt; [X, Y]
+</pre>
+
+<h1>Extended</h1>
+<p>
+Given a class that defines a no-backsies <tt>extended</tt> callback.
+</p>
+<pre>
+  module U
+    include NoBacksies::Callbacks
+
+    def self.list
+      @list ||= []
+    end
+
+    callback :extended do |mod|
+      list &lt;&lt; mod
+    end
+  end
+
+  class X
+    extend U
+  end
+
+  class Y
+    extend U
+  end
+</pre>
+<p>
+Then the results are as follows.
+</p>
+<pre>
+  U.list #=&gt; [X, Y]
+</pre>
+
+<h1>Inherited</h1>
+<p>
+Given a class that defines a no-backsies <tt>inherited</tt> callback.
+</p>
+<pre>
+  class Y
+    include NoBacksies::Callbacks
+
+    def self.list
+      @list ||= []
+    end
+
+    callback :inherited do |base|
+      list &lt;&lt; base
+    end
+  end
+
+  z = Class.new(Y)
+</pre>
+<p>
+Then the results are as follows.
+</p>
+<pre>
+  Y.list #=&gt; [z]
+</pre>
+
 
     </div>
   </div>
