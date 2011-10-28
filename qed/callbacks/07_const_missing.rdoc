@@ -9,7 +9,7 @@ Given a class that defines a no-backsies +const_missing+ callback.
       @list ||= []
     end
 
-    callback :const_missing do |const|
+    callback :const_missing, :superless=>true do |const|
       list << const
     end
 
@@ -22,3 +22,5 @@ Then the results are as follows.
 
   Y.list #=> [:FOO, :BAR]
 
+Notice we used `:superless` to prevent super from being called, which would
+have raised an NameError.
