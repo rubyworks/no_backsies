@@ -1,17 +1,17 @@
 ---
 github: {}
 
-gem:
-  autospec: true
+gem: {}
 
 dnote:
-  service  : DNote
-  labels   : ~
-  output   : log/DNOTE.rdoc
+  output: log/NOTES.rdoc
 
 yard:
   yardopts: true
   priority: -1
+
+qed:
+  files: qed/
 
 qedoc:
   files : qed/
@@ -21,23 +21,12 @@ qedoc:
     - site/qed.html
 
 email:
-  service : Email
-  file    : ~
-  subject : ~
   mailto  : 
     - ruby-talk@ruby-lang.org
     - rubyworks-mailinglist@googlegroups.com
-  #from    : transfire@gmail.com
-  #server  : <%= ENV['EMAIL_SERVER'] %>
-  #port    : <%= ENV['EMAIL_PORT'] %>
-  #account : <%= ENV['EMAIL_ACCOUNT'] %>
-  #domain  : <%= ENV['EMAIL_DOMAIN'] %>
-  #login   : <%= ENV['EMAIL_LOGIN'] %>
-  #secure  : <%= ENV['EMAIL_SECURE'] %>
 
 vclog:
-  service  : VClog
-  output   : log/history.rdoc
-  type     : history
-  active   : false
+  output:
+    - log/History.rdoc
+    - log/Changes.rdoc
 
