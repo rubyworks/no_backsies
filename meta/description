@@ -1,0 +1,5 @@
+NoBacksies is a callback layer built on top of Ruby's built-in callback
+methods. It makes it possible to add new callbacks very easily, without
+having to fuss with more nuanced issues of defining and redefining callback
+methods.
+

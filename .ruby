@@ -2,8 +2,12 @@
 source:
 - meta
 authors:
-- name: Thomas Sawyer
-copyrights: []
+- name: 7rans
+  email: transfire@gmail.com
+copyrights:
+- holder: Rubyworks
+  year: '2009'
+  license: BSD-2-Clause
 replacements: []
 alternatives: []
 requirements:
@@ -32,5 +36,12 @@ summary: Better handling of Ruby callbacks
 title: NoBacksies
 version: 0.3.2
 name: no_backsies
+description: ! 'NoBacksies is a callback layer built on top of Ruby''s built-in callback
+
+  methods. It makes it possible to add new callbacks very easily, without
+
+  having to fuss with more nuanced issues of defining and redefining callback
+
+  methods.'
 organization: Rubyworks
 date: '2011-10-27'

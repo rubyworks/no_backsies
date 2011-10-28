@@ -18,7 +18,7 @@ qedoc:
   title : No Backsies
   output:
     - QED.rdoc
-    - site/qed.html
+    - pages/qed.html
 
 email:
   mailto  : 
