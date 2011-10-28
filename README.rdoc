@@ -1,5 +1,12 @@
 = No Backsies
 
+{Homepage}[http://rubyworks.github.com/no_backsies] |
+{Development}[http://github.com/rubyworks/no_backsies] |
+{Mailing List}[http://groups.google.com/group/rubyworks-mailinglist] |
+{API Reference}[http://rubydoc.info/gems/no_backsies/frames] |
+{Demonstrandum}[http://rubyworks.github.com/no_backsies/qed.html]
+
+
 == DESCRIPTION
 
 NoBacksies is a callback layer built on top of Ruby's built-in callback
@@ -8,13 +15,9 @@ having to fuss with more nuanced issues of defining and redefining callback
 methods.
 
 
-== RESOURCES
+== Compatability
 
-* {Homepage}[http://rubyworks.github.com/no_backsies]
-* {Development}[http://github.com/rubyworks/no_backsies]
-* {Mailing List}[http://groups.google.com/group/rubyworks-mailinglist]
-* {API Reference}[http://rubydoc.info/gems/no_backsies/frames]
-* {Demonstrandum}[http://rubyworks.github.com/no_backsies/QED.html]
+NoBacksies does not currently work with *Rubinius*. Anyone know why?
 
 
 == EXAMPLES
