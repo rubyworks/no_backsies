@@ -1,7 +1,15 @@
 = RELEASE HISTORY
 
+== 0.3.2 | 2011-10-27
 
-== 0.3.1 | 2011-07-6
+This release adds support for calling super from within callback procedures.
+
+Changes:
+
+* Add support for calling super.
+
+
+== 0.3.1 | 2011-07-06
 
 Fix method argumements on const_missing, included, extended
 and inherited callbacks.

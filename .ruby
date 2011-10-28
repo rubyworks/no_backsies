@@ -30,7 +30,7 @@ revision: 0
 created: '2011-04-29'
 summary: Better handling of Ruby callbacks
 title: NoBacksies
-version: 0.3.1
+version: 0.3.2
 name: no_backsies
 organization: Rubyworks
 date: '2011-10-27'

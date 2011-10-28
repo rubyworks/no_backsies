@@ -1,6 +1,6 @@
-#!mast .yardopts .ruby bin lib qed [A-Z]*.*
-.yardopts
+#!mast .ruby .yardopts bin lib man qed spec test [A-Z]*.*
 .ruby
+.yardopts
 lib/no_backsies.rb
 qed/01_example.rdoc
 qed/02_express.rdoc
