@@ -1,46 +1,36 @@
---- 
-name: no_backsies
-version: 0.3.1
-title: NoBacksies
-summary: Better handling of Ruby callbacks
-description: |-
-  NoBacksies is a callback layer built on top of Ruby's built-in callback
-  methods. It makes it possible to add new callbacks very easily, without
-  having to fuss with more nuanced issues of defining and redefining callback
-  methods.
-loadpath: 
-- lib
-manifest: MANIFEST
-requires: 
+---
+source:
+- meta
+authors:
+- name: Thomas Sawyer
+copyrights: []
+replacements: []
+alternatives: []
+requirements:
 - name: qed
-  version: 0+
-  group: 
+  groups:
   - test
+  development: true
 - name: detroit
-  version: 0+
-  group: 
+  groups:
   - build
+  development: true
+dependencies: []
 conflicts: []
-
-replaces: []
-
-engine_check: []
-
-organization: Rubyworks
-contact: trans <transfire@gmail.com>
-created: "2011-04-29"
-copyright: Copyright (c) 2011 Thomas Sawyer
-licenses: []
-
-authors: 
-- Thomas Sawyer
-maintainers: []
-
-resources: 
+repositories: []
+resources:
   home: http://rubyworks.github.com/no_backsies
   code: http://github.com/rubyworks/no_backsies
   mail: http://googlegroups/group/rubyworks-mailinglist
   docs: http://rubydoc.info/gems/no_backsies/frames
-repositories: {}
-
-spec_version: 1.0.0
+extra: {}
+load_path:
+- lib
+revision: 0
+created: '2011-04-29'
+summary: Better handling of Ruby callbacks
+title: NoBacksies
+version: 0.3.1
+name: no_backsies
+organization: Rubyworks
+date: '2011-10-27'
