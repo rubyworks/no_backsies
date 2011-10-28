@@ -1,6 +1,6 @@
 # NoBacksies module ecapsulates all supported callback mixins.
 #
-# NoBackseis::Callbacks can be mixed-in and all supported callbacks will
+# NoBacksies::Callbacks can be mixed-in and all supported callbacks will
 # be applied to the class or module. 
 # 
 #   class Y
@@ -46,14 +46,30 @@
 #   y = Y.new
 #   y.foo! #=> "foo!"
 #
-# NOTE: Currently the NoBackies module only supports class level callbacks.
-# We will look into adding instance level callbacks in a future version.
+# After all callbacks for a class are invoked, NoBacksies will invoke the
+# callback method of the parent class via `super`, if such a method is defined.
+# To change this, you can reconstruct the main callback method itself. It's not
+# difficult. Every callback follows the same pattern, e.g. for `method_added`:
 #
-#--
-# TODO: What about adding `super if defined?(super)` to callback methods?
-# Should this be standard? Should it occur before or after? Or should
-# in be controlled via a special callback, e.g. `callback method_added, :super`?
-#++
+#    def self.method_added(method)
+#      callback_invoke(:method_added, method)
+#      super(method) if defined?(super)
+#    end
+#
+# So if you want to call super before the other callbacks, then you could
+# simply redefine this with:
+#
+#    def self.method_added(method)
+#      super(method) if defined?(super)
+#      callback_invoke(:method_added, method)
+#    end
+#
+# The default behavior is to call it afterward becuase that is by far the most
+# commonly desired behavior.
+#
+# NOTE: Currently the NoBacksies module only supports class level callbacks.
+# We will look into adding instance level callbacks, such as `method_missing`
+# in a future version.
 
 module NoBacksies
 
@@ -131,7 +147,7 @@ module NoBacksies
         end
       end
     end
-  end
+  end #module
 
   # Callback system for #method_added.
   module MethodAdded
@@ -144,6 +160,7 @@ module NoBacksies
     #
     def method_added(method)
       callback_invoke(:method_added, method)
+      super(method) if defined?(super)
     end
   end
 
@@ -158,6 +175,7 @@ module NoBacksies
     #
     def method_removed(method)
       callback_invoke(:method_removed, method)
+      super(method) if defined?(super)
     end
   end
 
@@ -172,6 +190,7 @@ module NoBacksies
     #
     def method_undefined(method)
       callback_invoke(:method_undefined, method)
+      super(method) if defined?(super)
     end
   end
 
@@ -186,10 +205,11 @@ module NoBacksies
     #
     def singleton_method_added(method)
       callback_invoke(:singleton_method_added, method)
+      super(method) if defined?(super)
     end
   end
 
-  # Callback system for #method_removed.
+  # Callback system for #singleton_method_removed.
   module SingletonMethodRemoved
     #
     def self.append_features(base)
@@ -200,10 +220,11 @@ module NoBacksies
     #
     def singleton_method_removed(method)
       callback_invoke(:singleton_method_removed, method)
+      super(method) if defined?(super)
     end
   end
 
-  # Callback system for #method_removed.
+  # Callback system for #singleton_method_undefined.
   module SingletonMethodUndefined
     #
     def self.append_features(base)
@@ -214,6 +235,7 @@ module NoBacksies
     #
     def singleton_method_undefined(method)
       callback_invoke(:singleton_method_undefined, method)
+      super(method) if defined?(super)
     end
   end
 
@@ -228,6 +250,7 @@ module NoBacksies
     #
     def const_missing(const)
       callback_invoke(:const_missing, const)
+      super(const) if defined?(super)
     end
   end
 
@@ -242,6 +265,7 @@ module NoBacksies
     #
     def included(mod)
       callback_invoke(:included, mod)
+      super(mod) if defined?(super)
     end
   end
 
@@ -256,6 +280,7 @@ module NoBacksies
     #
     def extended(mod)
       callback_invoke(:extended, mod)
+      super(mod) if defined?(super)
     end
   end
 
@@ -270,6 +295,7 @@ module NoBacksies
     #
     def inherited(base)
       callback_invoke(:inherited, base)
+      super(base) if defined?(super)
     end
   end
 
