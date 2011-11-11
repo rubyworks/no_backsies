@@ -1,9 +1,11 @@
 ---
-github: {}
+github:
+  gh_pages: web
 
 gem: {}
 
 dnote:
+  title: Developer's Notes
   output: log/NOTES.rdoc
 
 yard:

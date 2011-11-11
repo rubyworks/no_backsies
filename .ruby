@@ -1,6 +1,6 @@
 ---
 source:
-- meta
+- var
 authors:
 - name: 7rans
   email: transfire@gmail.com
@@ -44,4 +44,4 @@ description: ! 'NoBacksies is a callback layer built on top of Ruby''s built-in 
 
   methods.'
 organization: Rubyworks
-date: '2011-10-27'
+date: '2011-11-11'
