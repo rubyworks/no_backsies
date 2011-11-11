@@ -1,0 +1,385 @@
+= Basic Example
+
+First require the NoBacksies library.
+
+  require 'no_backsies'
+
+Include the Callbacks module in a class and define
+a callback procedure.
+
+  class Y
+    include NoBacksies::Callbacks
+
+    def self.list
+      @list ||= []
+    end
+
+    callback :method_added do |method|
+      list << method
+    end
+
+    def foo; end
+    def bar; end
+  end
+
+We can see that +list+ holds the methods added.
+
+  Y.list.assert == [:foo, :bar]
+
+
+= Callback Expression
+
+NoBacksies makes it easier to control callback expression. This
+is useful in the prevention of infinite recursion. For instance,
+infinite recursion is a common problem when a +method_added+ callback
+defines a new method.
+
+Here is an example that demonstrates how to work around this problem
+using the +callback_express+ method.
+
+  class Z
+    include NoBacksies::Callbacks
+
+    callback :method_added do |method|
+      callback_express :method_added=>false do
+        define_method("#{method}!") do
+          send(method) + "!"
+        end
+      end
+    end
+
+    def foo; "foo"; end
+    def bar; "bar"; end
+  end
+
+In this example, a new `Z` object will get an automatically defined bang method
+for every explicitly defined method.
+
+  z = Z.new
+  z.foo  #=> "foo"
+  z.foo! #=> "foo!"
+  z.bar  #=> "bar"
+  z.bar! #=> "bar!"
+
+
+= Callback Options
+
+== Once Callback Option
+
+NoBacksies supports special callback options. The first is +:once+.
+By setting +:once+ to +true+, the callback will be used one time and
+then removed.
+
+  class Q
+    include NoBacksies::Callbacks
+
+    def self.list
+      @list ||= []
+    end
+
+    callback :method_added, :once=>true do |method|
+      list << method
+    end
+
+    def foo; "foo"; end
+    def bar; "bar"; end
+  end
+
+Here we see that only :foo has been added to the list.
+
+  Q.list #=> [:foo]
+
+== Safe Callback Option
+
+The other option supported is +:safe+. When +:safe+ is set to true
+the callback is automatically wrapped in an #callback_express block
+that sets the expression of the callback to false while it is being
+processed. This means we can rewrite our first example more succinctly.
+
+  class Z2
+    include NoBacksies::Callbacks
+
+    callback :method_added, :safe=>true do |method|
+      define_method("#{method}!") do
+        send(method) + "!"
+      end
+    end
+
+    def foo; "foo"; end
+    def bar; "bar"; end
+  end
+
+In this example, a new `Z` object will get an automatically defined bang method
+for every explicitly defined method.
+
+  z = Z2.new
+  z.foo  #=> "foo"
+  z.foo! #=> "foo!"
+  z.bar  #=> "bar"
+  z.bar! #=> "bar!"
+
+
+== Method Added
+
+Given a class that defines a no-backsies +method_added+ callback.
+
+  class Y
+    include NoBacksies::Callbacks
+
+    def self.list
+      @list ||= []
+    end
+
+    callback :method_added do |method|
+      list << method
+    end
+
+    def foo; end
+    def bar; end
+  end
+
+Then the results are as follows.
+
+  Y.list #=> [:foo, :bar]
+
+
+== Method Removed
+
+Given a class that defines a no-backsies +method_removed+ callback.
+
+  class Y
+    include NoBacksies::Callbacks
+
+    def self.list
+      @list ||= []
+    end
+
+    callback :method_removed do |method|
+      list << method
+    end
+
+    def foo; end
+    def bar; end
+
+    remove_method(:foo)
+    remove_method(:bar)
+  end
+
+Then the results are as follows.
+
+  Y.list #=> [:foo, :bar]
+
+
+== Method Undefined
+
+Given a class that defines a no-backsies +method_undefined+ callback.
+
+  class Y
+    include NoBacksies::Callbacks
+
+    def self.list
+      @list ||= []
+    end
+
+    callback :method_undefined do |method|
+      list << method
+    end
+
+    def foo; end
+    def bar; end
+
+    undef_method(:foo)
+    undef_method(:bar)
+  end
+
+Then the results are as follows.
+
+  Y.list #=> [:foo, :bar]
+
+
+== Singleton Method Added
+
+Given a class that defines a no-backsies +singleton_method_added+ callback.
+
+  class Y
+    include NoBacksies::Callbacks
+
+    def self.list
+      @list ||= []
+    end
+
+    callback :singleton_method_added do |method|
+      list << method
+    end
+
+    def self.foo; end
+    def self.bar; end
+  end
+
+Then the results are as follows.
+
+  Y.list #=> [:foo, :bar]
+
+
+== Singleton Method Removed
+
+Given a class that defines a no-backsies +singleton_method_removed+ callback.
+
+  class Y
+    include NoBacksies::Callbacks
+
+    def self.list
+      @list ||= []
+    end
+
+    callback :singleton_method_removed do |method|
+      list << method
+    end
+
+    def self.foo; end
+    def self.bar; end
+
+    class << self
+      remove_method(:foo)
+      remove_method(:bar)
+    end
+  end
+
+Then the results are as follows.
+
+  Y.list #=> [:foo, :bar]
+
+
+== Singleton Method Undefined
+
+  class Y
+    include NoBacksies::Callbacks
+
+    def self.list
+      @list ||= []
+    end
+
+    callback :singleton_method_undefined do |method|
+      list << method
+    end
+
+    def self.foo; end
+    def self.bar; end
+
+    class << self
+      undef_method(:foo)
+      undef_method(:bar)
+    end
+  end
+
+  Y.list #=> [:foo, :bar]
+
+
+= Constant Missing
+
+Given a class that defines a no-backsies +const_missing+ callback.
+
+  class Y
+    include NoBacksies::Callbacks
+
+    def self.list
+      @list ||= []
+    end
+
+    callback :const_missing, :superless=>true do |const|
+      list << const
+    end
+
+    FOO
+    BAR
+
+  end
+
+Then the results are as follows.
+
+  Y.list #=> [:FOO, :BAR]
+
+Notice we used `:superless` to prevent super from being called, which would
+have raised an NameError.
+
+= Included
+
+Given a class that defines a no-backsies +included+ callback.
+
+  module U
+    include NoBacksies::Callbacks
+
+    def self.list
+      @list ||= []
+    end
+
+    callback :included do |mod|
+      list << mod
+    end
+  end
+
+  class X
+    include U
+  end
+
+  class Y
+    include U
+  end
+
+Then the results are as follows.
+
+  U.list #=> [X, Y]
+
+
+= Extended
+
+Given a class that defines a no-backsies +extended+ callback.
+
+  module U
+    include NoBacksies::Callbacks
+
+    def self.list
+      @list ||= []
+    end
+
+    callback :extended do |mod|
+      list << mod
+    end
+  end
+
+  class X
+    extend U
+  end
+
+  class Y
+    extend U
+  end
+
+Then the results are as follows.
+
+  U.list #=> [X, Y]
+
+
+= Inherited
+
+Given a class that defines a no-backsies +inherited+ callback.
+
+  class Y
+    include NoBacksies::Callbacks
+
+    def self.list
+      @list ||= []
+    end
+
+    callback :inherited do |base|
+      list << base
+    end
+  end
+
+  z = Class.new(Y)
+
+Then the results are as follows.
+
+  Y.list #=> [z]
+
+
