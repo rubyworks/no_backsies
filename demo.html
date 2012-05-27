@@ -1,6 +1,6 @@
 <html>
 <head>
-  <title>Backsies Demonstrandum</title>
+  <title>No Backsies</title>
 
   <!-- TODO: most of the css before the '*' can be removed. -->
 
@@ -103,15 +103,10 @@
     .title { font-size: 2em; }
   </style>
 
-  <!-- TODO: only include if these files exists -->
-  <link href="../assets/styles/spec.css" type="text/css" rel="stylesheet">
-  <!-- spec.css might be a problem with clobber -->
-  <link href="spec.css" type="text/css" rel="stylesheet">
-
   
 
   <!-- JQuery is needed -->
-  <script src="jquery.js" type="text/javascript" language="javascript"></script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.6.1/jquery.min.js" type="text/javascript" language="javascript"></script>
 
 </head>
 
@@ -120,7 +115,8 @@
   <!-- Side Table of Contents -->
   <div id="sidebar" style="position: fixed; top: 10; right: 10; background: white;">
     <a href="javascript: toc_toggle();">
-      <img src="img/icon/book.jpg" height="30px;" style="border: none;" alt="TOC" align="right"/>
+      <!-- TODO: find a preminatn image on web to use -->
+      <!-- <img src="http://www.cdnjs.com/images/poweredbycloudflare.png" style="border: none;" alt="TOC" align="right"/> -->
     </a>
 
     <div id="toc_side" class="toc">
@@ -129,9 +125,10 @@
 
   <div id="container">
     <div id="header">
-      <img src="img/icon/book.jpg" align="left" style="padding-right: 10px;" alt=""/>
+      <!-- TODO: find a preminatn image on web to use -->
+      <!-- <img src="http://www.cdnjs.com/images/poweredbycloudflare.png" align="left" style="padding-right: 10px;" alt=""/> -->
 
-      <div class="title">Backsies Demonstrandum</div>
+      <div class="title">No Backsies</div>
 
       <h1>Table of Contents</h1>
 
@@ -259,6 +256,274 @@ z.foo  #=&gt; &quot;foo&quot;
 z.foo! #=&gt; &quot;foo!&quot;
 z.bar  #=&gt; &quot;bar&quot;
 z.bar! #=&gt; &quot;bar!&quot;</pre>
+
+
+<h2>Method Added</h2>
+
+<p>Given a class that defines a no-backsies <tt>method_added</tt> callback.</p>
+
+<pre>class Y
+  include NoBacksies::Callbacks
+
+  def self.list
+    @list ||= []
+  end
+
+  callback :method_added do |method|
+    list &lt;&lt; method
+  end
+
+  def foo; end
+  def bar; end
+end</pre>
+
+<p>Then the results are as follows.</p>
+
+<pre>Y.list #=&gt; [:foo, :bar]</pre>
+
+
+<h2>Method Removed</h2>
+
+<p>Given a class that defines a no-backsies <tt>method_removed</tt> callback.</p>
+
+<pre>class Y
+  include NoBacksies::Callbacks
+
+  def self.list
+    @list ||= []
+  end
+
+  callback :method_removed do |method|
+    list &lt;&lt; method
+  end
+
+  def foo; end
+  def bar; end
+
+  remove_method(:foo)
+  remove_method(:bar)
+end</pre>
+
+<p>Then the results are as follows.</p>
+
+<pre>Y.list #=&gt; [:foo, :bar]</pre>
+
+
+<h2>Method Undefined</h2>
+
+<p>Given a class that defines a no-backsies <tt>method_undefined</tt>
+callback.</p>
+
+<pre>class Y
+  include NoBacksies::Callbacks
+
+  def self.list
+    @list ||= []
+  end
+
+  callback :method_undefined do |method|
+    list &lt;&lt; method
+  end
+
+  def foo; end
+  def bar; end
+
+  undef_method(:foo)
+  undef_method(:bar)
+end</pre>
+
+<p>Then the results are as follows.</p>
+
+<pre>Y.list #=&gt; [:foo, :bar]</pre>
+
+
+<h2>Singleton Method Added</h2>
+
+<p>Given a class that defines a no-backsies <tt>singleton_method_added</tt>
+callback.</p>
+
+<pre>class Y
+  include NoBacksies::Callbacks
+
+  def self.list
+    @list ||= []
+  end
+
+  callback :singleton_method_added do |method|
+    list &lt;&lt; method
+  end
+
+  def self.foo; end
+  def self.bar; end
+end</pre>
+
+<p>Then the results are as follows.</p>
+
+<pre>Y.list #=&gt; [:foo, :bar]</pre>
+
+
+<h2>Singleton Method Removed</h2>
+
+<p>Given a class that defines a no-backsies <tt>singleton_method_removed</tt>
+callback.</p>
+
+<pre>class Y
+  include NoBacksies::Callbacks
+
+  def self.list
+    @list ||= []
+  end
+
+  callback :singleton_method_removed do |method|
+    list &lt;&lt; method
+  end
+
+  def self.foo; end
+  def self.bar; end
+
+  class &lt;&lt; self
+    remove_method(:foo)
+    remove_method(:bar)
+  end
+end</pre>
+
+<p>Then the results are as follows.</p>
+
+<pre>Y.list #=&gt; [:foo, :bar]</pre>
+
+
+<h2>Singleton Method Undefined</h2>
+
+<pre>class Y
+  include NoBacksies::Callbacks
+
+  def self.list
+    @list ||= []
+  end
+
+  callback :singleton_method_undefined do |method|
+    list &lt;&lt; method
+  end
+
+  def self.foo; end
+  def self.bar; end
+
+  class &lt;&lt; self
+    undef_method(:foo)
+    undef_method(:bar)
+  end
+end
+
+Y.list #=&gt; [:foo, :bar]</pre>
+
+
+<h1>Constant Missing</h1>
+
+<p>Given a class that defines a no-backsies <tt>const_missing</tt> callback.</p>
+
+<pre>class Y
+  include NoBacksies::Callbacks
+
+  def self.list
+    @list ||= []
+  end
+
+  callback :const_missing, :superless=&gt;true do |const|
+    list &lt;&lt; const
+  end
+
+  FOO
+  BAR
+
+end</pre>
+
+<p>Then the results are as follows.</p>
+
+<pre>Y.list #=&gt; [:FOO, :BAR]</pre>
+
+<p>Notice we used `:superless` to prevent super from being called, which would
+have raised an NameError.</p>
+
+
+<h1>Included</h1>
+
+<p>Given a class that defines a no-backsies <tt>included</tt> callback.</p>
+
+<pre>module U
+  include NoBacksies::Callbacks
+
+  def self.list
+    @list ||= []
+  end
+
+  callback :included do |mod|
+    list &lt;&lt; mod
+  end
+end
+
+class X
+  include U
+end
+
+class Y
+  include U
+end</pre>
+
+<p>Then the results are as follows.</p>
+
+<pre>U.list #=&gt; [X, Y]</pre>
+
+
+<h1>Extended</h1>
+
+<p>Given a class that defines a no-backsies <tt>extended</tt> callback.</p>
+
+<pre>module U
+  include NoBacksies::Callbacks
+
+  def self.list
+    @list ||= []
+  end
+
+  callback :extended do |mod|
+    list &lt;&lt; mod
+  end
+end
+
+class X
+  extend U
+end
+
+class Y
+  extend U
+end</pre>
+
+<p>Then the results are as follows.</p>
+
+<pre>U.list #=&gt; [X, Y]</pre>
+
+
+<h1>Inherited</h1>
+
+<p>Given a class that defines a no-backsies <tt>inherited</tt> callback.</p>
+
+<pre>class Y
+  include NoBacksies::Callbacks
+
+  def self.list
+    @list ||= []
+  end
+
+  callback :inherited do |base|
+    list &lt;&lt; base
+  end
+end
+
+z = Class.new(Y)</pre>
+
+<p>Then the results are as follows.</p>
+
+<pre>Y.list #=&gt; [z]</pre>
 
 
     </div>
