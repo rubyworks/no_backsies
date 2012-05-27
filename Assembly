@@ -13,14 +13,14 @@ yard:
   priority: -1
 
 qed:
-  files: qed/
+  files: demo/
 
 qedoc:
-  files : qed/
+  files : demo/
   title : No Backsies
   output:
-    - QED.rdoc
-    - pages/qed.html
+    - DEMO.rdoc
+    - web/demo.html
 
 email:
   mailto  : 
